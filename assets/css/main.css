@@ -1,0 +1,159 @@
+:root {
+  --eurojackpot-logo: url("/eurojackpot.svg");
+}
+
+/* UI SIZES */
+
+:root,
+:host {
+  /* static sizes */
+  --size-0: 0px;
+  --size-1: 1px;
+  --size-2: 2px;
+  --size-3: 3px;
+  --size-4: 4px;
+  --size-5: 5px;
+  --size-6: 6px;
+  --size-7: 7px;
+  --size-8: 8px;
+  --size-9: 9px;
+  --size-10: 10px;
+
+  /* responsive sizes – small screens */
+  --size-50: 5px;
+  --size-100: 10px;
+  --size-150: 15px;
+  --size-200: 20px;
+  --size-250: 25px;
+  --size-300: 30px;
+  --size-350: 35px;
+  --size-400: 40px;
+  --size-450: 45px;
+  --size-500: 50px;
+  --size-550: 55px;
+  --size-600: 60px;
+  --size-650: 65px;
+  --size-700: 70px;
+  --size-750: 75px;
+  --size-800: 80px;
+  --size-850: 85px;
+  --size-900: 90px;
+}
+
+@media (min-width: 768px) {
+  :root,
+  :host {
+    /* responsivie sizes – large screens */
+    --size-50: 4px;
+    --size-100: 8px;
+    --size-150: 12px;
+    --size-200: 16px;
+    --size-250: 20px;
+    --size-300: 24px;
+    --size-350: 28px;
+    --size-400: 32px;
+    --size-450: 36px;
+    --size-500: 40px;
+    --size-550: 44px;
+    --size-600: 48px;
+    --size-650: 52px;
+    --size-700: 56px;
+    --size-750: 60px;
+    --size-800: 64px;
+    --size-850: 68px;
+    --size-900: 72px;
+  }
+}
+
+/* TYPOGRAPHY */
+
+:root,
+:host {
+  /* font sizes – small screens */
+  --font-size-50: 13px;
+  --font-size-75: 15px;
+  --font-size-100: 17px;
+  --font-size-200: 19px;
+  --font-size-300: 22px;
+  --font-size-400: 24px;
+  --font-size-500: 27px;
+  --font-size-600: 31px;
+  --font-size-700: 34px;
+  --font-size-800: 39px;
+  --font-size-900: 44px;
+  --font-size-1000: 49px;
+  --font-size-1100: 55px;
+  --font-size-1200: 62px;
+  --font-size-1300: 70px;
+}
+
+@media (min-width: 768px) {
+  :root,
+  :host {
+    /* font sizes – large screens */
+    --font-size-50: 11px;
+    --font-size-75: 12px;
+    --font-size-100: 14px;
+    --font-size-200: 16px;
+    --font-size-300: 18px;
+    --font-size-400: 20px;
+    --font-size-500: 22px;
+    --font-size-600: 25px;
+    --font-size-700: 28px;
+    --font-size-800: 32px;
+    --font-size-900: 36px;
+    --font-size-1000: 40px;
+    --font-size-1100: 45px;
+    --font-size-1200: 50px;
+    --font-size-1300: 60px;
+  }
+}
+
+:root,
+:host {
+  text-rendering: optimizeSpeed;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* font-stack */
+  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+
+  --font-100: normal normal 400 var(--font-size-100) / var(--font-size-300)
+    var(--font-stack);
+  --font-200: normal normal 400 var(--font-size-200) / var(--font-size-400)
+    var(--font-stack);
+  --font-300: normal normal 400 var(--font-size-300) / var(--font-size-500)
+    var(--font-stack);
+  --font-400: normal normal 400 var(--font-size-400) / var(--font-size-600)
+    var(--font-stack);
+  --font-500: normal normal 400 var(--font-size-500) / var(--font-size-700)
+    var(--font-stack);
+  --font-600: normal normal 400 var(--font-size-600) / var(--font-size-800)
+    var(--font-stack);
+  --font-700: normal normal 400 var(--font-size-700) / var(--font-size-900)
+    var(--font-stack);
+  --font-800: normal normal 400 var(--font-size-800) / var(--font-size-1000)
+    var(--font-stack);
+  --font-900: normal normal 400 var(--font-size-900) / var(--font-size-1100)
+    var(--font-stack);
+
+  --font-s: normal normal 400 var(--font-size-100) / var(--font-size-300)
+    var(--font-stack);
+  --font-m: normal normal 400 var(--font-size-200) / var(--font-size-400)
+    var(--font-stack);
+  --font-l: normal normal 400 var(--font-size-300) / var(--font-size-500)
+    var(--font-stack);
+  --font-xl: normal normal 400 var(--font-size-400) / var(--font-size-600)
+    var(--font-stack);
+}
+
+/* COLORS */
+
+:root,
+:host {
+  --color-white: rgb(255, 255, 255);
+  --color-accent: rgb(79, 70, 229);
+  --color-primary: rgb(61, 59, 53);
+  --color-secondary: rgb(238, 242, 255);
+}

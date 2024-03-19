@@ -1,0 +1,105 @@
+query TicketDefinition($type: String!, $gameCommunityGroup: String, $variant: String) {
+  ticketDefinition(
+    type: $type
+    gameCommunityGroup: $gameCommunityGroup
+    variant: $variant
+  ) {
+    backendError
+    success
+    visibleErrors {
+      messages
+      idents
+      __typename
+    }
+    available
+    fields
+    numbersPerField {
+      base
+      extra
+      __typename
+    }
+    jackpotDrawsSinceLastHit
+    jackpotLastHit
+    tipsPerField {
+      base
+      extra
+      __typename
+    }
+    jackpot
+    drawings {
+      ...drawing
+      __typename
+    }
+    shares {
+      ...share
+      __typename
+    }
+    discounts {
+      percent
+      type
+      __typename
+    }
+    gameCommunities {
+      available
+      gameCommunityLotteries {
+        count
+        gluecksspirale
+        megaPlier
+        plus5
+        powerPlay
+        sharesFrom
+        siegerchance
+        spiel77
+        super6
+        system
+        type
+        weekdays
+        __typename
+      }
+      id
+      isAbonnement
+      jackpotCracker
+      name
+      participations
+      price
+      variant
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment drawing on ticketDefinitionDrawing {
+  deadline
+  drawing
+  originalDrawing
+  drawingShifted
+  ticketFee
+  pricePerField
+  additionalOptions {
+    fee
+    game
+    price
+    __typename
+  }
+  additionalGames {
+    game
+    price
+    fee
+    __typename
+  }
+  __typename
+}
+
+fragment share on modelShare {
+  from
+  id
+  name
+  price
+  shares
+  sharesSelection
+  system
+  till
+  type
+  __typename
+}
