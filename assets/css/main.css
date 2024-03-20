@@ -2,6 +2,17 @@
   --eurojackpot-logo: url("/eurojackpot.svg");
 }
 
+body {
+  margin: 0;
+}
+
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--size-200);
+  padding-bottom: var(--size-900);
+}
+
 /* UI SIZES */
 
 :root,
@@ -136,15 +147,6 @@
   --font-800: normal normal 400 var(--font-size-800) / var(--font-size-1000)
     var(--font-stack);
   --font-900: normal normal 400 var(--font-size-900) / var(--font-size-1100)
-    var(--font-stack);
-
-  --font-s: normal normal 400 var(--font-size-100) / var(--font-size-300)
-    var(--font-stack);
-  --font-m: normal normal 400 var(--font-size-200) / var(--font-size-400)
-    var(--font-stack);
-  --font-l: normal normal 400 var(--font-size-300) / var(--font-size-500)
-    var(--font-stack);
-  --font-xl: normal normal 400 var(--font-size-400) / var(--font-size-600)
     var(--font-stack);
 }
 

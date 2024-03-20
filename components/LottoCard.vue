@@ -1,26 +1,18 @@
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { ref, computed } from "vue";
 
 type LottoCardProps = {
   fieldId: number;
   fieldCount: number;
   tipsPerField: { base: number; extra: number };
   numbersPerField: { base: number; extra: number };
+  selectedNumbers: { base: number[]; extra: number[] };
 };
 
 const props = defineProps<LottoCardProps>();
 const tipsPerField = ref(props.tipsPerField);
 const numbersPerField = ref(props.numbersPerField);
-
-type SelectedNumbers = {
-  base: number[];
-  extra: number[];
-};
-
-const selectedNumbers = ref<SelectedNumbers>({
-  base: [],
-  extra: [],
-});
+const selectedNumbers = ref(props.selectedNumbers);
 
 const resetHandler = () => {
   selectedNumbers.value.base = [];
@@ -39,7 +31,7 @@ const randomHandler = () => {
 };
 
 const random = (max: number, count: number) => {
-  const numbers = [];
+  const numbers: number[] = [];
   while (numbers.length < count) {
     const number = Math.floor(Math.random() * max) + 1;
     if (!numbers.includes(number)) {
@@ -66,24 +58,31 @@ const fieldStatus = computed(() => {
 </script>
 
 <template>
-  <section class="card">
-    <div class="title">Feld {{ props.fieldId }} von {{ props.fieldCount }}</div>
+  <section class="card" :data-testid="'field-' + props.fieldId">
+    <div class="headline">
+      Feld {{ props.fieldId }} von {{ props.fieldCount }}
+    </div>
     <LottoCardField
+      dataTestId="base-field"
       :numbersPerField="numbersPerField.base"
       :tipsPerField="tipsPerField.base"
       :selectedNumbers="selectedNumbers.base"
     />
     <div class="extra-headline">Eurozahlen</div>
     <LottoCardField
+      dataTestId="extra-field"
       :numbersPerField="numbersPerField.extra"
       :tipsPerField="tipsPerField.extra"
       :selectedNumbers="selectedNumbers.extra"
     />
-
     <footer class="footer">
-      <Button size="s" @click="randomHandler">R</Button>
+      <Button size="s" @click="randomHandler">
+        <Icon size="s" name="dice" />
+      </Button>
       <Button size="s">{{ fieldStatus }}</Button>
-      <Button size="s" @click="resetHandler">C</Button>
+      <Button size="s" @click="resetHandler">
+        <Icon size="s" name="trash" />
+      </Button>
     </footer>
   </section>
 </template>
@@ -97,15 +96,19 @@ const fieldStatus = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   gap: var(--size-200);
   padding: var(--size-200) var(--size-200);
   border: var(--size-1) solid rgb(229, 231, 235);
   border-radius: var(--size-4);
 }
 
+.headline {
+  font: var(--font-300);
+  font-weight: 500;
+}
+
 .extra-headline {
-  font: var(--font-m);
+  font: var(--font-200);
   font-weight: 500;
 }
 

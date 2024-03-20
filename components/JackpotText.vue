@@ -6,7 +6,7 @@ type JackPotProps = {
 const props = defineProps<JackPotProps>();
 
 const jackpotText = computed(() => {
-  const mio = Math.floor(props.jackpot / 1000000);
+  const mio = Math.floor((parseInt(props.jackpot, 10) || 0) / 1000000);
   return `${mio} Mio € Jackpot`;
 });
 </script>
@@ -17,7 +17,7 @@ const jackpotText = computed(() => {
 
 <style scoped>
 .jackpot {
-  font: var(--font-xl);
+  font: var(--font-400);
   font-weight: 500;
   background: #eac837;
   color: #2d0000;

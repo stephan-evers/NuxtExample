@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, useSlots, computed, provide } from "vue";
 
-const sliderRef = ref(null);
+const sliderRef = ref<HTMLElement|null>(null);
 
-const scroll = (direction) => {
+const scroll = async (direction: 1 | -1) => {
+  if (!sliderRef.value) return;
   const galleryWidth = sliderRef.value.offsetWidth;
   const scrollAmount = (direction * galleryWidth) / 4;
   sliderRef.value.scrollBy({
@@ -12,21 +13,23 @@ const scroll = (direction) => {
   });
 };
 
-const className = ref("item");
-
 provide("item", {
   elementType: "li",
-  elementProps: { class: className.value },
+  elementProps: { class: "item" },
 });
 </script>
 
 <template>
   <div class="slider-container">
-    <Button class="button-prev" @click="() => scroll(-1)"><</Button>
+    <Button class="button-prev" @click="() => scroll(-1)">
+      <Icon name="chevronLeft" />
+    </Button>
     <ul class="slider" ref="sliderRef">
       <slot></slot>
     </ul>
-    <Button class="button-next" @click="() => scroll(1)">></Button>
+    <Button class="button-next" @click="() => scroll(1)">
+      <Icon name="chevronRight" />
+    </Button>
   </div>
 </template>
 
@@ -55,10 +58,29 @@ provide("item", {
 
 :deep(.item) {
   display: inline-flex;
-  width: calc(25% - 8px);
+  width: 100%;
   flex-shrink: 0;
   scroll-behavior: smooth;
   scroll-snap-align: start;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  :deep(.item) {
+    width: calc(50% - var(--size-100));
+  }
+}
+
+@media (min-width: 992px) {
+  :deep(.item) {
+    width: calc(33.3333% - var(--size-100));
+  }
+}
+
+@media (min-width: 1200px) {
+  :deep(.item) {
+    width: calc(25% - var(--size-100));
+  }
 }
 
 .button-prev {

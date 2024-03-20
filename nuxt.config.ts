@@ -2,11 +2,14 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/apollo"],
+  modules: ["@nuxtjs/apollo", "@nuxt/test-utils/module"],
+  future: {
+    typescriptBundlerResolution: false,
+  },
   apollo: {
     includeNodeModules: true,
     fetchOptions: {
-      mode: "no-cors", // no-cors, *cors, same-origin
+      mode: "no-cors",
     },
     clients: {
       default: { httpEndpoint: "https://www.lottohelden.de/graphql" },

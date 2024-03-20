@@ -3,13 +3,16 @@ type ButtonVariant = "accent" | "primary" | "secondary";
 type ButtonSize = "s" | "m" | "l";
 
 type ButtonProps = {
-  variant?: ButtonVariant;
   size?: ButtonSize;
+  variant?: ButtonVariant;
+  disabled?: boolean;
+  dataTestId?: string;
 };
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  variant: "primary",
   size: "m",
+  variant: "primary",
+  disabled: false,
 });
 
 const computedClass = computed(() => {
@@ -18,39 +21,50 @@ const computedClass = computed(() => {
 </script>
 
 <template>
-  <component is="button" :class="computedClass" @click="$emit('click')">
+  <button
+    :class="computedClass"
+    :disabled="props.disabled"
+    :data-testid="props?.dataTestId"
+  >
     <slot></slot>
-  </component>
+  </button>
 </template>
 
 <style scoped>
 .button {
-  all: unset;
   cursor: pointer;
+  border: none;
   user-select: none;
   font-weight: 500 !important;
   border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:deep(.icon) {
+  margin: 0 -9999px;
 }
 
 .size-s {
-  font: var(--font-s);
-  height: var(--size-300);
-  /* min-width: var(--size-300); */
-  padding: var(--size-100) var(--size-200);
+  font: var(--font-100);
+  min-height: var(--size-400);
+  min-width: var(--size-400);
+  padding: 0 var(--size-200);
 }
 
 .size-m {
-  font: var(--font-m);
-  height: var(--size-350);
-  /* min-width: var(--size-350); */
-  padding: var(--size-100) var(--size-300);
+  font: var(--font-300);
+  min-height: var(--size-500);
+  min-width: var(--size-500);
+  padding: 0 var(--size-250);
 }
 
 .size-l {
-  font: var(--font-l);
-  height: var(--size-400);
-  /* min-width: var(--size-400); */
-  padding: var(--size-100) var(--size-400);
+  font: var(--font-500);
+  min-height: var(--size-600);
+  min-width: var(--size-600);
+  padding: 0 var(--size-300);
 }
 
 .variant-accent {
@@ -66,5 +80,12 @@ const computedClass = computed(() => {
 .variant-secondary {
   color: var(--color-white);
   background-color: var(--color-primary);
+}
+
+.button[disabled] {
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 </style>
