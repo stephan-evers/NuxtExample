@@ -62,6 +62,6 @@ function toggleNumber(n: number) {
 }
 
 .selected {
-  background-color: rgb(199 210 254);
+  background-color: rgb(199, 210, 254);
 }
 </style>

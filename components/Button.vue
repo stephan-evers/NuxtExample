@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, useSlots } from "vue";
+
 type ButtonVariant = "accent" | "primary" | "secondary";
 type ButtonSize = "s" | "m" | "l";
 
@@ -7,6 +9,7 @@ type ButtonProps = {
   variant?: ButtonVariant;
   disabled?: boolean;
   dataTestId?: string;
+  href?: string;
 };
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -15,19 +18,36 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   disabled: false,
 });
 
+const slots = useSlots();
+
 const computedClass = computed(() => {
-  return ["button", `variant-${props.variant}`, `size-${props.size}`];
+  const hasTextNodes = slots.default().some((node) => {
+    return node.type === Symbol.for("v-txt");
+  });
+
+  return [
+    "button",
+    `variant-${props.variant}`,
+    `size-${props.size}`,
+    hasTextNodes ? "with-text" : "without-text",
+  ];
+});
+
+const elementType = computed(() => {
+  return props.href ? resolveComponent("NuxtLink") : "button";
 });
 </script>
 
 <template>
-  <button
+  <component
+    :is="elementType"
+    :to="props.href"
     :class="computedClass"
     :disabled="props.disabled"
     :data-testid="props?.dataTestId"
   >
     <slot></slot>
-  </button>
+  </component>
 </template>
 
 <style scoped>
@@ -37,13 +57,11 @@ const computedClass = computed(() => {
   user-select: none;
   font-weight: 500 !important;
   border-radius: 9999px;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-:deep(.icon) {
-  margin: 0 -9999px;
+  gap: var(--size-100);
 }
 
 .size-s {
@@ -87,5 +105,10 @@ const computedClass = computed(() => {
   box-shadow: none;
   opacity: 0.5;
   pointer-events: none;
+}
+
+.without-text {
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>

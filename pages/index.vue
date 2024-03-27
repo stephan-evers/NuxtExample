@@ -1,121 +1,47 @@
 <script setup lang="ts">
-import { watch } from "vue";
-import query from "@/graphql/queryTicketDefinition.gql";
-import type { TicketDefinitionResponse } from "@/types";
+import query from "@/graphql/queryDraws.gql";
+import { computed } from "vue";
 
-const { data } = await useAsyncQuery<TicketDefinitionResponse>(query, {
+const { data } = await useAsyncQuery(query, {
   type: "eurojackpot",
 });
-
-type Field = {
-  base: number[];
-  extra: number[];
-};
-
-type TicketState = {
-  selectedNumbers: Field[];
-  validFields: Field[];
-};
-
-const ticket = useState<TicketState>("ticket", () => {
-  return {
-    selectedNumbers: Array.from(
-      { length: data.value?.ticketDefinition.fields || 0 },
-      () => ({ base: [], extra: [] }),
-    ),
-    validFields: [],
-  };
-});
-
-watch(ticket.value.selectedNumbers, () => {
-  if (!data.value?.ticketDefinition) return;
-  const { base, extra } = data.value.ticketDefinition.tipsPerField;
-  ticket.value.validFields = ticket.value.selectedNumbers.filter((field) => {
-    return base === field.base.length && extra === field.extra.length;
-  });
-});
-
-const submitHandler = async () => {
-  await navigateTo({ path: "/checkout" });
-};
 </script>
 
 <template>
-  <section class="layout">
-    <header class="header">
-      <img class="logo" src="/eurojackpot.svg" width="236" height="100" />
-      <template v-if="data">
-        <JackpotText :jackpot="(data.ticketDefinition.jackpot)" />
-      </template>
-    </header>
-
-    <Slider>
-      <Item v-if="data" v-for="n in data.ticketDefinition.fields" :key="n">
-        <LottoCard
-          :fieldId="n"
-          :fieldCount="data.ticketDefinition.fields"
-          :tipsPerField="data.ticketDefinition.tipsPerField"
-          :numbersPerField="data.ticketDefinition.numbersPerField"
-          :selectedNumbers="ticket.selectedNumbers[n - 1]"
-        />
-      </Item>
-    </Slider>
-    <footer class="footer">
-      <Button
-        size="m"
-        @click="submitHandler"
-        :disabled="!ticket.validFields.length"
-        dataTestId="submit-button"
-      >
-        Spielschein abschicken
-      </Button>
-      <pre
-        data-testid="ticket-state"
-        :data-ticket-state="JSON.stringify(ticket)"
-        hidden
-      ></pre>
-    </footer>
-  </section>
+  <Layout>
+    <template v-if="data" #default>
+      <div :class="$style.grid">
+        <Hero :class="$style.hero" />
+        <Drawings :class="$style.drawings" :draws="data.draw.draws" />
+        <Odds :class="$style.odds" :odds="data.draw.draws[0].odds" />
+      </div>
+    </template>
+  </Layout>
 </template>
 
-<style scoped>
-.logo {
-  max-width: 100%;
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+<style module>
+.grid {
+  display: grid;
+  gap: var(--size-100);
+  grid-template-areas: "hero hero hero" "drawings drawings drawings" "odds odds odds";
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 @media (min-width: 768px) {
-  .header {
-    flex-direction: row;
+  .grid {
+    grid-template-areas: "hero hero drawings" "odds odds odds";
   }
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: var(--color-white);
-  box-shadow: 0 8px 30px rgb(0, 0, 0, 0.12);
-
-  width: 100%;
-  padding: var(--size-200);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  box-sizing: border-box;
+.hero {
+  grid-area: hero;
 }
 
-@media (min-width: 768px) {
-  .footer {
-    position: initial;
-    box-shadow: none;
-  }
+.drawings {
+  grid-area: drawings;
+}
+
+.odds {
+  grid-area: odds;
 }
 </style>

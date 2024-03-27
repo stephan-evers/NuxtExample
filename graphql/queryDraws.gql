@@ -1,0 +1,48 @@
+query draws($type: String!, $variant: String, $limit: Int = 1, $date: String, $withSEO: Boolean = false, $language: Language = DE) {
+  draw(
+    type: $type
+    variant: $variant
+    limit: $limit
+    date: $date
+    language: $language
+  ) {
+    backendError
+    success
+    visibleErrors {
+      messages
+      idents
+    }
+    draws {
+      date
+      time
+      seo @include(if: $withSEO) {
+        description
+        title
+        texts {
+          headline
+          content
+        }
+      }
+      additionalNumbers
+      gameAmount
+      jackpot
+      shares
+      numbers
+      powerPlay
+      megaPlier
+      odds {
+        description
+        descriptionShort
+        link
+        numberOfWinners
+        numbers
+        odd
+        chance
+        winningClass
+        withOptions
+      }
+      rollDown
+      rePlay
+    }
+  }
+}

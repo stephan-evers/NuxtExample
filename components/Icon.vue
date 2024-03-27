@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import {
+  PlusIcon,
   TrashIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ArrowRightIcon,
 } from "@heroicons/vue/24/solid";
 
 import DiceIcon from "@/assets/icons/dice.js";
@@ -18,6 +20,8 @@ const icons = {
   chevronRight: ChevronRightIcon,
   trash: TrashIcon,
   dice: DiceIcon,
+  plus: PlusIcon,
+  arrowRight: ArrowRightIcon,
 };
 
 const props = withDefaults(defineProps<IconProps>(), {
@@ -36,6 +40,7 @@ const computedClass = computed(() => {
 <style scoped>
 .icon {
   color: inherit;
+  flex-shrink: 0;
 }
 
 .size-s {

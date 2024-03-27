@@ -1,16 +1,10 @@
-:root {
-  --eurojackpot-logo: url("/eurojackpot.svg");
-}
-
 body {
   margin: 0;
 }
 
-.layout {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--size-200);
-  padding-bottom: var(--size-900);
+pre {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 /* UI SIZES */
@@ -130,6 +124,8 @@ body {
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 
+  --font-50: normal normal 400 var(--font-size-50) / var(--font-size-200)
+    var(--font-stack);
   --font-100: normal normal 400 var(--font-size-100) / var(--font-size-300)
     var(--font-stack);
   --font-200: normal normal 400 var(--font-size-200) / var(--font-size-400)
